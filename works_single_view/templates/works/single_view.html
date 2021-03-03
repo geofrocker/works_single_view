@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <table>
+      <th>#</th>
+      <th>ISWC</th>
+      <th>Title</th>
+      <th>Contributors</th>
+      {% for data in metadata%}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{data.iswc}}</td>
+        <td>{{data.title}}</td>
+        <td>
+          {% for contributor in data.contributors.all%}
+            {{contributor}}<br>
+          {%endfor%}
+        </td>
+      </tr>
+      {%endfor%}
+    </table>
+  </div>
+</body>
+</html>
