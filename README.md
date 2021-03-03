@@ -24,6 +24,9 @@ Make sure you have python3, pip3 and postgres installed
 
 ## Usage Guidelines
 
+### Running tests
+To run all test: `python manage.py test`
+
 ### Matching and reconciling
 
 To match and reconcile metadata, this application has been configured to multiple paths passed through a django command.

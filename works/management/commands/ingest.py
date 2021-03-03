@@ -7,6 +7,8 @@ from works.models import (
     Contributor
 )
 
+SUCCESS_TEXT = "Successfully matched and reconciled metadata"
+
 
 class Command(BaseCommand):
     help = 'Matching and reconcile metadata'
@@ -21,9 +23,8 @@ class Command(BaseCommand):
                 next(reader, None)
                 for row in reader:
                     input_contributors_names = row[1].split("|")
-                    _create_missing_contributors(input_contributors_names)
-                    db_contributors = Contributor.objects.filter(
-                        name__in=input_contributors_names)
+                    db_contributors = _create_missing_contributors(
+                        input_contributors_names)
                     input_title = row[0]
                     input_iswc = row[2]
                     try:
@@ -37,11 +38,13 @@ class Command(BaseCommand):
                                 iswc=input_iswc,
                             )
                             instance.contributors.set(db_contributors)
-            self.stdout.write(self.style.SUCCESS(
-                'Successfully matched and reconciled metadata'))
+            self.stdout.write(self.style.SUCCESS(SUCCESS_TEXT))
 
 
 def _create_missing_contributors(names):
+    db_contributors = []
     for name in names:
         obj, created = Contributor.objects.get_or_create(
             name=name, defaults={'name': name})
+        db_contributors.append(obj)
+    return db_contributors
