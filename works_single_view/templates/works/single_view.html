@@ -37,8 +37,11 @@
           {%endfor%}
         </td>
       </tr>
-      {%endfor%}
+      {% endfor %}
     </table>
+  {% if not metadata %}
+    <center>No data to be displayed at the moment</center>
+  {% endif %}
   </div>
 </body>
 </html>

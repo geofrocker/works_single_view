@@ -13,3 +13,8 @@ class ApiViewTestCase(TestCase):
         url = reverse("api_view", args=["T9204649558"])
         response = self.client.get(url)
         self.assertContains(response, "Edward")
+
+    def test_404_unavailable_record(self):
+        url = reverse("api_view", args=["XXXXXXX"])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 404)
